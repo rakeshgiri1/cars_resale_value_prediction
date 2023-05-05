@@ -11,6 +11,9 @@ from validators import *
 from logger import log
 from werkzeug.utils import secure_filename
 import os
+import joblib   
+import pandas as pd
+import numpy as np
 
 app = Flask(__name__)
 app.secret_key  = '()*(#@!@#)'
@@ -153,11 +156,64 @@ def view_profile():
 
 @app.route('/form/audi', methods=['GET','POST'])
 def form_audi():
+    if request.method == 'POST':
+        transmission = request.form.get('transmission')
+        fueltype = request.form.get('fueltype')
+        carmodel = request.form.get('carmodel')
+        year = request.form.get('year')
+        mileage = request.form.get('mileage')
+        tax = request.form.get('tax')
+        mpg = request.form.get('mpg')
+        enginesize = request.form.get('enginesize')
+        model = joblib.load('audi\svr_model.pkl')
+        X = pd.DataFrame({
+            "model":[carmodel],
+            "year":[year],
+            "transmission":[transmission],
+            "mileage":[mileage],
+            "fuelType":[fueltype],
+            "tax":[tax],
+            "mpg":[mpg],
+            "engineSize":[enginesize]
+        })
+        print(X.to_dict())
+        result = model.predict(X)[0]
+        session['predicted'] = result
+        return redirect('/form/audi')
     return render_template('audi_form.html')
 
 @app.route('/form/bmw', methods=['GET','POST'])
 def form_bmw():
     return render_template('bmw_form.html')
+
+@app.route('/form/focus', methods=['GET','POST'])
+def form_focus():
+    return render_template('focus_form.html')
+
+@app.route('/form/ford', methods=['GET','POST'])
+def form_ford():
+    return render_template('ford_form.html')
+
+@app.route('/form/skoda', methods=['GET','POST'])
+def form_skoda():
+    return render_template('skoda_form.html')
+
+@app.route('/form/merc', methods=['GET','POST'])
+def form_merc():
+    return render_template('merc_form.html')
+
+@app.route('/form/toyota', methods=['GET','POST'])
+def form_toyota():
+    return render_template('toyata_form.html')
+
+@app.route('/form/vauxhall', methods=['GET','POST'])
+def form_vauxhall():
+    return render_template('vauxhall_form.html')
+
+@app.route('/form/volkwagen', methods=['GET','POST'])
+def form_volkswagen():
+    return render_template('volkswagen_form.html')
+
 
 if __name__ == '__main__':
   app.run(host='0.0.0.0', port=8000, debug=True)
