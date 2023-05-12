@@ -21,6 +21,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = DB_URL
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['UPLOAD_FOLDER'] = 'static/uploads'
 
+import math
 def session_add(key, value):
     session[key] = value
 
@@ -165,7 +166,7 @@ def form_audi():
         tax = request.form.get('tax')
         mpg = request.form.get('mpg')
         enginesize = request.form.get('enginesize')
-        model = joblib.load('audi\svr_model.pkl')
+        model = joblib.load('audi/rf_model.pkl')
         X = pd.DataFrame({
             "model":[carmodel],
             "year":[year],
@@ -178,42 +179,261 @@ def form_audi():
         })
         print(X.to_dict())
         result = model.predict(X)[0]
-        session['predicted'] = result
+        session['audi_price'] = math.ceil(result)
         return redirect('/form/audi')
     return render_template('audi_form.html')
 
 @app.route('/form/bmw', methods=['GET','POST'])
 def form_bmw():
+    if request.method == 'POST':
+        transmission = request.form.get('transmission')
+        fueltype = request.form.get('fueltype')
+        carmodel = request.form.get('carmodel')
+        year = request.form.get('year')
+        mileage = request.form.get('mileage')
+        tax = request.form.get('tax')
+        mpg = request.form.get('mpg')
+        enginesize = request.form.get('enginesize')
+        model = joblib.load('bmw/rf_model.pkl')
+        X = pd.DataFrame({
+            "model":[carmodel],
+            "year":[year],
+            "transmission":[transmission],
+            "mileage":[mileage],
+            "fuelType":[fueltype],
+            "tax":[tax],
+            "mpg":[mpg],
+            "engineSize":[enginesize]
+        })
+        print(X.to_dict())
+        result = model.predict(X)[0]
+        session['bmw_price'] = math.ceil(result)
+        return redirect('/form/bmw')
     return render_template('bmw_form.html')
 
 @app.route('/form/focus', methods=['GET','POST'])
 def form_focus():
+    if request.method == 'POST':
+        transmission = request.form.get('transmission')
+        fueltype = request.form.get('fueltype')
+        carmodel = request.form.get('carmodel')
+        year = request.form.get('year')
+        mileage = request.form.get('mileage')
+        tax = request.form.get('tax')
+        mpg = request.form.get('mpg')
+        enginesize = request.form.get('enginesize')
+        model = joblib.load('focus/rf_model.pkl')
+        X = pd.DataFrame({
+            "model":[carmodel],
+            "year":[year],
+            "transmission":[transmission],
+            "mileage":[mileage],
+            "fuelType":[fueltype],
+            "tax":[tax],
+            "mpg":[mpg],
+            "engineSize":[enginesize]
+        })
+        print(X.to_dict())
+        result = model.predict(X)[0]
+        session['focus_price'] = math.ceil(result)
+        return redirect('/form/focus')
     return render_template('focus_form.html')
 
 @app.route('/form/ford', methods=['GET','POST'])
 def form_ford():
+    if request.method == 'POST':
+        transmission = request.form.get('transmission')
+        fueltype = request.form.get('fueltype')
+        carmodel = request.form.get('carmodel')
+        year = request.form.get('year')
+        mileage = request.form.get('mileage')
+        tax = request.form.get('tax')
+        mpg = request.form.get('mpg')
+        enginesize = request.form.get('enginesize')
+        model = joblib.load('ford/rf_model.pkl')
+        X = pd.DataFrame({
+            "model":[carmodel],
+            "year":[year],
+            "transmission":[transmission],
+            "mileage":[mileage],
+            "fuelType":[fueltype],
+            "tax":[tax],
+            "mpg":[mpg],
+            "engineSize":[enginesize]
+        })
+        print(X.to_dict())
+        result = model.predict(X)[0]
+        session['ford_price'] = math.ceil(result)
+        return redirect('/form/ford')
     return render_template('ford_form.html')
 
 @app.route('/form/skoda', methods=['GET','POST'])
 def form_skoda():
+    if request.method == 'POST':
+        transmission = request.form.get('transmission')
+        fueltype = request.form.get('fueltype')
+        carmodel = request.form.get('carmodel')
+        year = request.form.get('year')
+        mileage = request.form.get('mileage')
+        tax = request.form.get('tax')
+        mpg = request.form.get('mpg')
+        enginesize = request.form.get('enginesize')
+        model = joblib.load('skoda/rf_model.pkl')
+        X = pd.DataFrame({
+            "model":[carmodel],
+            "year":[year],
+            "transmission":[transmission],
+            "mileage":[mileage],
+            "fuelType":[fueltype],
+            "tax":[tax],
+            "mpg":[mpg],
+            "engineSize":[enginesize]
+        })
+        print(X.to_dict())
+        result = model.predict(X)[0]
+        session['skoda_price'] = math.ceil(result)
+        return redirect('/form/skoda')
     return render_template('skoda_form.html')
 
 @app.route('/form/merc', methods=['GET','POST'])
 def form_merc():
+    if request.method == 'POST':
+        transmission = request.form.get('transmission')
+        fueltype = request.form.get('fueltype')
+        carmodel = request.form.get('carmodel')
+        year = request.form.get('year')
+        mileage = request.form.get('mileage')
+        tax = request.form.get('tax')
+        mpg = request.form.get('mpg')
+        enginesize = request.form.get('enginesize')
+        model = joblib.load('merc/rf_model.pkl')
+        X = pd.DataFrame({
+            "model":[carmodel],
+            "year":[year],
+            "transmission":[transmission],
+            "mileage":[mileage],
+            "fuelType":[fueltype],
+            "tax":[tax],
+            "mpg":[mpg],
+            "engineSize":[enginesize]
+        })
+        print(X.to_dict())
+        result = model.predict(X)[0]
+        session['merc_price'] = math.ceil(result)
+        return redirect('/form/merc')
     return render_template('merc_form.html')
 
 @app.route('/form/toyota', methods=['GET','POST'])
 def form_toyota():
-    return render_template('toyata_form.html')
+    if request.method == 'POST':
+        transmission = request.form.get('transmission')
+        fueltype = request.form.get('fueltype')
+        carmodel = request.form.get('carmodel')
+        year = request.form.get('year')
+        mileage = request.form.get('mileage')
+        tax = request.form.get('tax')
+        mpg = request.form.get('mpg')
+        enginesize = request.form.get('enginesize')
+        model = joblib.load('toyota/rf_model.pkl')
+        X = pd.DataFrame({
+            "model":[carmodel],
+            "year":[year],
+            "transmission":[transmission],
+            "mileage":[mileage],
+            "fuelType":[fueltype],
+            "tax":[tax],
+            "mpg":[mpg],
+            "engineSize":[enginesize]
+        })
+        print(X.to_dict())
+        result = model.predict(X)[0]
+        session['toyota_price'] = math.ceil(result)
+        return redirect('/form/toyota')
+    return render_template('toyota_form.html')
 
 @app.route('/form/vauxhall', methods=['GET','POST'])
 def form_vauxhall():
+    if request.method == 'POST':
+        transmission = request.form.get('transmission')
+        fueltype = request.form.get('fueltype')
+        carmodel = request.form.get('carmodel')
+        year = request.form.get('year')
+        mileage = request.form.get('mileage')
+        tax = request.form.get('tax')
+        mpg = request.form.get('mpg')
+        enginesize = request.form.get('enginesize')
+        model = joblib.load('vauxhall/rf_model.pkl')
+        X = pd.DataFrame({
+            "model":[carmodel],
+            "year":[year],
+            "transmission":[transmission],
+            "mileage":[mileage],
+            "fuelType":[fueltype],
+            "tax":[tax],
+            "mpg":[mpg],
+            "engineSize":[enginesize]
+        })
+        print(X.to_dict())
+        result = model.predict(X)[0]
+        session['vauxhall_price'] = math.ceil(result)
+        return redirect('/form/vauxhall')
     return render_template('vauxhall_form.html')
 
-@app.route('/form/volkwagen', methods=['GET','POST'])
+@app.route('/form/volkswagen', methods=['GET','POST'])
 def form_volkswagen():
+    if request.method == 'POST':
+        transmission = request.form.get('transmission')
+        fueltype = request.form.get('fueltype')
+        carmodel = request.form.get('carmodel')
+        year = request.form.get('year')
+        mileage = request.form.get('mileage')
+        tax = request.form.get('tax')
+        mpg = request.form.get('mpg')
+        enginesize = request.form.get('enginesize')
+        model = joblib.load('volkswagen/rf_model.pkl')
+        X = pd.DataFrame({
+            "model":[carmodel],
+            "year":[year],
+            "transmission":[transmission],
+            "mileage":[mileage],
+            "fuelType":[fueltype],
+            "tax":[tax],
+            "mpg":[mpg],
+            "engineSize":[enginesize]
+        })
+        print(X.to_dict())
+        result = model.predict(X)[0]
+        session['volkswagen_price'] = math.ceil(result)
+        return redirect('/form/volkswagen')
     return render_template('volkswagen_form.html')
 
+@app.route('/form/hyundi', methods=['GET','POST'])
+def form_hyundai():
+    if request.method == 'POST':
+        transmission = request.form.get('transmission')
+        fueltype = request.form.get('fueltype')
+        carmodel = request.form.get('carmodel')
+        year = request.form.get('year')
+        mileage = request.form.get('mileage')
+        tax = request.form.get('tax')
+        mpg = request.form.get('mpg')
+        enginesize = request.form.get('enginesize')
+        model = joblib.load('hyundi/rf_model.pkl')
+        X = pd.DataFrame({
+            "model":[carmodel],
+            "year":[year],
+            "transmission":[transmission],
+            "mileage":[mileage],
+            "fuelType":[fueltype],
+            "tax":[tax],
+            "mpg":[mpg],
+            "engineSize":[enginesize]
+        })
+        print(X.to_dict())
+        result = model.predict(X)[0]
+        session['hyundi_price'] = math.ceil(result)
+        return redirect('/form/hyundi')
+    return render_template('hyundi_form.html')
 
 if __name__ == '__main__':
   app.run(host='0.0.0.0', port=8000, debug=True)
